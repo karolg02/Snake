@@ -16,7 +16,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int applesEaten = 0;
     int appleX;
     int appleY;
-    char direction = 'R';
+    public char direction = 'R';
     boolean running = false;
     Timer timer;
     Random random;
@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
-        this.addKeyListener(new MyKeyAdapter());
+        this.addKeyListener(new MyKeyAdapter(this));
         startGame();
 
         initialState = new InitialGameState(x, y, bodyParts, applesEaten, direction);
@@ -185,38 +185,5 @@ public class GamePanel extends JPanel implements ActionListener {
             checkCollisions();
         }
         repaint();
-    }
-
-    public class MyKeyAdapter extends KeyAdapter {
-        @Override
-        public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_A: // left
-                    if (direction != 'R') {
-                        direction = 'L';
-                    }
-                    break;
-                case KeyEvent.VK_D: // right
-                    if (direction != 'L') {
-                        direction = 'R';
-                    }
-                    break;
-                case KeyEvent.VK_W: // up
-                    if (direction != 'D') {
-                        direction = 'U';
-                    }
-                    break;
-                case KeyEvent.VK_S: // down
-                    if (direction != 'U') {
-                        direction = 'D';
-                    }
-                    break;
-                case KeyEvent.VK_ENTER: // restart
-                    if (!running) {
-                        resetGame();
-                    }
-                    break;
-            }
-        }
     }
 }
