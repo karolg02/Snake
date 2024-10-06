@@ -5,7 +5,7 @@ public class MyKeyAdapter extends KeyAdapter {
 
     GamePanel gamePanel;
 
-    // Konstruktor przyjmujacy referencje do GamePanel
+    // Constructor referenced to GamePanel
     public MyKeyAdapter(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
