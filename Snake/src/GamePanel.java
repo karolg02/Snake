@@ -4,12 +4,12 @@ import java.awt.event.*;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
-
-    static final int SCREEN_WIDTH = 640;
-    static final int SCREEN_HEIGHT = 640;
+    //40px dif on bar, if it isn't the first screen
+    static final int SCREEN_WIDTH = 620;
+    static final int SCREEN_HEIGHT = 580;
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
-    static final int DELAY = 75;
+    static final int DELAY = 50;
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
     int bodyParts = 6;
@@ -18,6 +18,7 @@ public class GamePanel extends JPanel implements ActionListener {
     int appleY;
     public char direction = 'R';
     boolean running = false;
+    public boolean boardLines = true;
     Timer timer;
     Random random;
 
@@ -48,16 +49,34 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void draw(Graphics g) {
+        if(boardLines){
+            for(int i = 0; i < 640/UNIT_SIZE; i++){
+                g.setColor(Color.GRAY);
+                g.drawLine(i*UNIT_SIZE, 0, i*UNIT_SIZE, 640);
+                g.drawLine(0, i*UNIT_SIZE, 640, i*UNIT_SIZE);
+            }
+        }
+
         if (running) {
+
             g.setColor(Color.RED);
             g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE);
 
             for (int i = 0; i < bodyParts; i++) {
                 if (i == 0) {
-                    g.setColor(Color.GREEN);
+                    if(applesEaten < 10){
+                        g.setColor(Color.GREEN);
+                    }else {
+                        g.setColor(Color.YELLOW);
+                    }
                     g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 } else {
-                    g.setColor(new Color(45, 180, 0));
+                    if(applesEaten < 10){
+                        g.setColor(new Color(45, 180, 0));
+                    }
+                    if(applesEaten > 10){
+                        g.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
+                    }
                     g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
                 }
             }

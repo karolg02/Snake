@@ -38,6 +38,10 @@ public class MyKeyAdapter extends KeyAdapter {
                     gamePanel.resetGame();
                 }
                 break;
+            case KeyEvent.VK_SLASH:
+                    gamePanel.boardLines = !gamePanel.boardLines;
+                break;
+
         }
     }
 }
