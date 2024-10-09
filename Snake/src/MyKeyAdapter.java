@@ -4,10 +4,12 @@ import java.awt.event.KeyEvent;
 public class MyKeyAdapter extends KeyAdapter {
 
     GamePanel gamePanel;
+    GameFrame gameFrame;
 
     // Constructor referenced to GamePanel
-    public MyKeyAdapter(GamePanel gamePanel) {
+    public MyKeyAdapter(GamePanel gamePanel, GameFrame gameFrame) {
         this.gamePanel = gamePanel;
+        this.gameFrame = gameFrame;
     }
 
     @Override
@@ -40,6 +42,11 @@ public class MyKeyAdapter extends KeyAdapter {
                 break;
             case KeyEvent.VK_SLASH:
                     gamePanel.boardLines = !gamePanel.boardLines;
+                break;
+            case KeyEvent.VK_ESCAPE:
+                if(!gamePanel.running) {
+                    gameFrame.showMenuPanel();
+                }
                 break;
 
         }

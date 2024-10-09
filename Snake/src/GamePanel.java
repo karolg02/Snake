@@ -9,28 +9,29 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int SCREEN_HEIGHT = 580;
     static final int UNIT_SIZE = 25;
     static final int GAME_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
-    static final int DELAY = 50;
-    final int x[] = new int[GAME_UNITS];
-    final int y[] = new int[GAME_UNITS];
+    int DELAY = 50;
+    final int[] x = new int[GAME_UNITS];
+    final int[] y = new int[GAME_UNITS];
     int bodyParts = 6;
     int applesEaten = 0;
     int appleX;
     int appleY;
-    public char direction = 'R';
+    char direction = 'R';
     boolean running = false;
-    public boolean boardLines = true;
+    boolean boardLines = true;
     Timer timer;
     Random random;
 
-    // Default settings for game
     InitialGameState initialState;
+    GameFrame gameFrame; // Dodajemy referencję do GameFrame
 
-    GamePanel() {
+    public GamePanel(GameFrame gameFrame) {
+        this.gameFrame = gameFrame;
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
-        this.addKeyListener(new MyKeyAdapter(this));
+        this.addKeyListener(new MyKeyAdapter(this, gameFrame)); // Przekazujemy gameFrame do MyKeyAdapter
         startGame();
 
         initialState = new InitialGameState(x, y, bodyParts, applesEaten, direction);
@@ -41,6 +42,13 @@ public class GamePanel extends JPanel implements ActionListener {
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
+    }
+
+    public void setDelay(int delay) {
+        this.DELAY = delay;
+        if (timer != null) {
+            timer.setDelay(delay);
+        }
     }
 
     public void paintComponent(Graphics g) {

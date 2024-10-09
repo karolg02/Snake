@@ -42,7 +42,7 @@ public class MenuPanel extends JPanel {
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Settings coming soon!");
+                gameFrame.showSettingsMenu();
             }
         });
 
